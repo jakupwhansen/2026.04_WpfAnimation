@@ -53,6 +53,7 @@ namespace WpfAnimation
         {
             flyt(img, 10);
             flyt(img2, 7);
+            tjekForCollision(img, img2, canvas);
         }
         private async Task flyt(Image imgIn, int hastighed)
         {
@@ -60,11 +61,42 @@ namespace WpfAnimation
             {
                 double x = Canvas.GetLeft(imgIn); //Henter x pos som img har lige nu.
                 Canvas.SetLeft(imgIn, x + hastighed); //flytter img 10 til højre.
-                if (x > 200)
+                if (x > 700)
                     Canvas.SetLeft(imgIn, 0);
                 await Task.Delay(100);
             }
         }
+        private async Task tjekForCollision(Image imgIn, Image imgIn2, Canvas c)
+        {
+            for (int i = 0; i < 3000; i++)
+            {
+                if (IsColliding(imgIn, imgIn2, c))
+                {
+                    c.Background = Brushes.Orange;
+                    }
+                else
+                {
+                    c.Background = Brushes.White;
+                }
+                await Task.Delay(50);
+            }
+
+        }
+
+        public bool IsColliding(FrameworkElement a, FrameworkElement b, Canvas canvas)
+        {
+            if (a == null || b == null) return false;
+
+            // Få den visuelle bounding box relativt til Canvas
+            GeneralTransform transformA = a.TransformToVisual(canvas);
+            Rect boundsA = transformA.TransformBounds(new Rect(0, 0, a.ActualWidth, a.ActualHeight));
+
+            GeneralTransform transformB = b.TransformToVisual(canvas);
+            Rect boundsB = transformB.TransformBounds(new Rect(0, 0, b.ActualWidth, b.ActualHeight));
+
+            return boundsA.IntersectsWith(boundsB);
+        }
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Left)
