@@ -37,7 +37,7 @@ namespace WpfAnimation
             Canvas.SetLeft(img, 0);
             Canvas.SetTop(img, 0);
             //-----------billed på canvas-----------
-            canvas.Children.Add(img);
+            canvas.Children.Add(img); 
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -50,5 +50,6 @@ namespace WpfAnimation
             double x = Canvas.GetLeft(img); //Henter x pos som img har lige nu.
             Canvas.SetLeft(img, x + 10); //flytter img 10 til højre.
         }
+
     }
 }
