@@ -27,6 +27,7 @@ namespace WpfAnimation
             startAll();
         }
         Image img = new Image();
+        Image img2 = new Image();
         public void startAll()
         {
             //-------------billede------------------                
@@ -38,17 +39,31 @@ namespace WpfAnimation
             Canvas.SetTop(img, 0);
             //-----------billed på canvas-----------
             canvas.Children.Add(img); 
+            //-------------billede------------------                
+            img2.Width = 50;
+            img2.Height = 50;
+            img2.Source = new BitmapImage(new Uri("Guitar.png", UriKind.Relative));
+            img2.Opacity = 1.0;
+            Canvas.SetLeft(img2, 0);
+            Canvas.SetTop(img2, 50);
+            //-----------billed på canvas-----------
+            canvas.Children.Add(img2); 
         }
-
-        private void button_Click(object sender, RoutedEventArgs e)
+        private async void button_Click(object sender, RoutedEventArgs e)
         {
-            flyt();
+                 flyt(img, 10);
+                 flyt(img2, 7);
         }
-
-        private void flyt()
+        private async Task flyt(Image imgIn, int hastighed)
         {
-            double x = Canvas.GetLeft(img); //Henter x pos som img har lige nu.
-            Canvas.SetLeft(img, x + 10); //flytter img 10 til højre.
+            for (int i = 0; i < 300; i++)
+            {
+                    double x = Canvas.GetLeft(imgIn); //Henter x pos som img har lige nu.
+                   Canvas.SetLeft(imgIn, x + hastighed); //flytter img 10 til højre.
+                if(x > 200)
+                    Canvas.SetLeft(imgIn, 0);
+                await Task.Delay(100);
+            }
         }
 
     }
