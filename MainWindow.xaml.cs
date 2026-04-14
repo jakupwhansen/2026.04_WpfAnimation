@@ -38,7 +38,7 @@ namespace WpfAnimation
             Canvas.SetLeft(img, 0);
             Canvas.SetTop(img, 0);
             //-----------billed på canvas-----------
-            canvas.Children.Add(img); 
+            canvas.Children.Add(img);
             //-------------billede------------------                
             img2.Width = 50;
             img2.Height = 50;
@@ -47,22 +47,43 @@ namespace WpfAnimation
             Canvas.SetLeft(img2, 0);
             Canvas.SetTop(img2, 50);
             //-----------billed på canvas-----------
-            canvas.Children.Add(img2); 
+            canvas.Children.Add(img2);
         }
         private async void button_Click(object sender, RoutedEventArgs e)
         {
-                 flyt(img, 10);
-                 flyt(img2, 7);
+            flyt(img, 10);
+            flyt(img2, 7);
         }
         private async Task flyt(Image imgIn, int hastighed)
         {
             for (int i = 0; i < 300; i++)
             {
-                    double x = Canvas.GetLeft(imgIn); //Henter x pos som img har lige nu.
-                   Canvas.SetLeft(imgIn, x + hastighed); //flytter img 10 til højre.
-                if(x > 200)
+                double x = Canvas.GetLeft(imgIn); //Henter x pos som img har lige nu.
+                Canvas.SetLeft(imgIn, x + hastighed); //flytter img 10 til højre.
+                if (x > 200)
                     Canvas.SetLeft(imgIn, 0);
                 await Task.Delay(100);
+            }
+        }
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+            {
+                // drej bil til venstre
+            }
+            else if (e.Key == Key.Right)
+            {
+                // drej bil til højre
+            }
+            else if (e.Key == Key.Up)
+            {
+                double y = Canvas.GetTop(img2); //Henter x pos som img har lige nu.
+                Canvas.SetTop(img2, y - 5); //flytter img 10 til højre.
+            }
+            else if (e.Key == Key.Down)
+            {
+                double y = Canvas.GetTop(img2); //Henter x pos som img har lige nu.
+                Canvas.SetTop(img2, y + 5); //flytter img 10 til højre.
             }
         }
 
